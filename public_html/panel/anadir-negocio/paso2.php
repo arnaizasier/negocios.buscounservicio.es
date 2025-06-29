@@ -10,6 +10,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     exit();
 }
 
+
 $negocio_id = intval($_GET['id']);
 
 $stmt = $pdo2->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
