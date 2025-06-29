@@ -36,7 +36,7 @@ if ($negocio_id > PHP_INT_MAX || $negocio_id < 1) {
 }
 
 try {
-    $stmt = $pdoNegocios->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id LIMIT 1");
+    $stmt = $pdo2->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id LIMIT 1");
     $stmt->bindParam(':negocio_id', $negocio_id, PDO::PARAM_INT);
     $stmt->bindParam(':usuario_id', $usuario_id, PDO::PARAM_INT);
     $stmt->execute();
@@ -74,7 +74,7 @@ try {
 $correo_enviado = false;
 if ($negocio['email_bienvenida'] !== 'no' && isset($email) && !empty($email)) {
     try {
-        $correo_enviado = enviarCorreoBienvenida($negocio, $email, $pdoNegocios);
+        $correo_enviado = enviarCorreoBienvenida($negocio, $email, $pdo2);
     } catch (Exception $e) {
         error_log('Email sending error: ' . $e->getMessage());
     }

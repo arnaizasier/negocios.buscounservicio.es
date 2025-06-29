@@ -12,7 +12,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $negocio_id = intval($_GET['id']);
 
-$stmt = $pdoNegocios->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
+$stmt = $pdo2->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
 $stmt->execute([':negocio_id' => $negocio_id, ':usuario_id' => $usuario_id]);
 $negocio = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'servicios' => []
         ];
         
-        actualizarMenuServicios($pdoNegocios, $negocio_id, $menu_servicios);
+        actualizarMenuServicios($pdo2, $negocio_id, $menu_servicios);
         header("Location: paso5?id=$negocio_id&success=1");
         exit();
     }
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($menu_servicios[$categoria_id])) {
             unset($menu_servicios[$categoria_id]);
             
-            actualizarMenuServicios($pdoNegocios, $negocio_id, $menu_servicios);
+            actualizarMenuServicios($pdo2, $negocio_id, $menu_servicios);
             header("Location: paso5?id=$negocio_id&success=1");
             exit();
         }
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'orden' => count($menu_servicios[$categoria_id]['servicios'])
             ];
             
-            actualizarMenuServicios($pdoNegocios, $negocio_id, $menu_servicios);
+            actualizarMenuServicios($pdo2, $negocio_id, $menu_servicios);
             header("Location: paso5?id=$negocio_id&success=1");
             exit();
         }
@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $menu_servicios[$categoria_id]['servicios'][$servicio_id]['trabajadores'] = $trabajadores_validados;
         }
         
-        actualizarMenuServicios($pdoNegocios, $negocio_id, $menu_servicios);
+        actualizarMenuServicios($pdo2, $negocio_id, $menu_servicios);
         header("Location: paso5?id=$negocio_id&success=1");
         exit();
     }
@@ -188,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($menu_servicios[$categoria_id]['servicios'][$servicio_id])) {
             unset($menu_servicios[$categoria_id]['servicios'][$servicio_id]);
             
-            actualizarMenuServicios($pdoNegocios, $negocio_id, $menu_servicios);
+            actualizarMenuServicios($pdo2, $negocio_id, $menu_servicios);
             header("Location: paso5?id=$negocio_id&success=1");
             exit();
         }
@@ -227,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $menu_servicios[$categoria_id]['servicios'] = $servicios;
                 
-                actualizarMenuServicios($pdoNegocios, $negocio_id, $menu_servicios);
+                actualizarMenuServicios($pdo2, $negocio_id, $menu_servicios);
                 header("Location: paso5?id=$negocio_id&success=1");
                 exit();
             }
@@ -248,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 $menu_servicios[$categoria_id]['servicios'] = $servicios;
                 
-                actualizarMenuServicios($pdoNegocios, $negocio_id, $menu_servicios);
+                actualizarMenuServicios($pdo2, $negocio_id, $menu_servicios);
                 header("Location: paso5?id=$negocio_id&success=1");
                 exit();
             }

@@ -16,7 +16,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $negocio_id = intval($_GET['id']);
 
 // Verificar que el negocio pertenece al usuario
-$stmt = $pdoNegocios->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
+$stmt = $pdo2->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
 $stmt->execute([':negocio_id' => $negocio_id, ':usuario_id' => $usuario_id]);
 $negocio = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
         
         // Actualizar en la base de datos
-        actualizarFAQ($pdoNegocios, $negocio_id, $preguntas_frecuentes);
+        actualizarFAQ($pdo2, $negocio_id, $preguntas_frecuentes);
         $success = "La pregunta frecuente se ha añadido correctamente.";
     }
     
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unset($preguntas_frecuentes[$faq_id]);
             
             // Actualizar en la base de datos
-            actualizarFAQ($pdoNegocios, $negocio_id, $preguntas_frecuentes);
+            actualizarFAQ($pdo2, $negocio_id, $preguntas_frecuentes);
             $success = "La pregunta frecuente se ha eliminado correctamente.";
         }
     }
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             
             // Actualizar en la base de datos
-            actualizarFAQ($pdoNegocios, $negocio_id, $nuevas_faqs);
+            actualizarFAQ($pdo2, $negocio_id, $nuevas_faqs);
         }
         
         // Redirigir a la página de confirmación

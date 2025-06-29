@@ -38,7 +38,7 @@ function validarRateLimit($usuario_id) {
 
 $negocio_id = intval($_GET['id']);
 
-$stmt = $pdoNegocios->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
+$stmt = $pdo2->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
 $stmt->execute([':negocio_id' => $negocio_id, ':usuario_id' => $usuario_id]);
 $negocio = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -451,7 +451,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $fotosCodificadas = !empty($fotos) ? json_encode($fotos) : null;
             
-            $stmt = $pdoNegocios->prepare("UPDATE negocios SET url_fotos = :url_fotos WHERE negocio_id = :negocio_id");
+            $stmt = $pdo2->prepare("UPDATE negocios SET url_fotos = :url_fotos WHERE negocio_id = :negocio_id");
             $stmt->execute([
                 ':url_fotos' => $fotosCodificadas,
                 ':negocio_id' => $negocio_id

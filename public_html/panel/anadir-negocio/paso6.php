@@ -12,7 +12,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 $negocio_id = intval($_GET['id']);
 
-$stmt = $pdoNegocios->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
+$stmt = $pdo2->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
 $stmt->execute([':negocio_id' => $negocio_id, ':usuario_id' => $usuario_id]);
 $negocio = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -38,7 +38,7 @@ $dias = [
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['no_horario'])) {
-        $stmt = $pdoNegocios->prepare("UPDATE negocios SET horario_apertura = NULL WHERE negocio_id = :negocio_id");
+        $stmt = $pdo2->prepare("UPDATE negocios SET horario_apertura = NULL WHERE negocio_id = :negocio_id");
         $stmt->execute([':negocio_id' => $negocio_id]);
         
         header("Location: paso7?id=$negocio_id");
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $horario_json = json_encode($horario_nuevo);
         
-        $stmt = $pdoNegocios->prepare("UPDATE negocios SET horario_apertura = :horario_apertura WHERE negocio_id = :negocio_id");
+        $stmt = $pdo2->prepare("UPDATE negocios SET horario_apertura = :horario_apertura WHERE negocio_id = :negocio_id");
         $stmt->execute([
             ':horario_apertura' => $horario_json,
             ':negocio_id' => $negocio_id

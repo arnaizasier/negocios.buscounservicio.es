@@ -1,2 +1,0 @@
-[28-Jun-2025 18:42:18 Europe/Madrid] PHP Warning:  Undefined array key "script_nonce" in /home/u898735099/domains/negocios.buscounservicio.es/public_html/panel/anadir-negocio/index.php on line 28
-[28-Jun-2025 18:42:38 Europe/Madrid] SECURITY [ADD_BUSINESS]: {"timestamp":"2025-06-28 18:42:38","ip":"88.15.47.179","user_agent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/137.0.0.0 Safari\/537.36","user_id":373,"message":"New business created successfully","data":{"negocio_id":"410"}}
