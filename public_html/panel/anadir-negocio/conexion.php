@@ -2,7 +2,6 @@
 // Incluir la configuración principal
 require_once '/home/u898735099/domains/negocios.buscounservicio.es/config.php';
 require_once '/home/u898735099/domains/negocios.buscounservicio.es/db-publica.php';
-require_once '/home/u898735099/domains/negocios.buscounservicio.es/db-negocios.php';
 
 
 // Verificar si el usuario está autenticado

@@ -15,7 +15,7 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
-require_once '../../../../config.php';
+require_once '/home/u898735099/domains/negocios.buscounservicio.es/config.php';
 require_once '../../../../db-publica.php';
 
 use Delight\Auth\Auth;
@@ -80,13 +80,12 @@ try {
                                             <?php
                                             if ($producto['url_imagenes']) {
                                                 $imagenes = explode(',', $producto['url_imagenes']);
-                                                $img_path = trim($imagenes[0]);
+                                                $img_url = trim($imagenes[0]);
                                                 
-                                                if (!empty($img_path) && strpos($img_path, '..') === false && strpos($img_path, '//') === false) {
-                                                    $img_url = 'https://buscounservicio.es/' . ltrim($img_path, '/');
+                                                if (!empty($img_url)) {
                                                     echo '<img src="' . htmlspecialchars($img_url, ENT_QUOTES, 'UTF-8') . '" alt="Producto" class="table-img" onerror="this.style.display=\'none\'">';
                                                 } else {
-                                                    echo 'Imagen no válida';
+                                                    echo 'Sin imagen';
                                                 }
                                             } else {
                                                 echo 'Sin imagen';
