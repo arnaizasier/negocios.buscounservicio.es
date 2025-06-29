@@ -76,6 +76,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+function deleteFromCloudflareR2($cloudflareUrl) {
+    if (strpos($cloudflareUrl, CLOUDFLARE_R2_CDN_URL . '/productos/') !== 0) {
+        return false;
+    }
+    
+    $fileName = basename($cloudflareUrl);
+    $objectKey = "productos/" . $fileName;
+    
+    $apiUrl = "https://api.cloudflare.com/client/v4/accounts/" . CLOUDFLARE_R2_ACCOUNT_ID . "/r2/buckets/" . CLOUDFLARE_R2_BUCKET_NAME . "/objects/$objectKey";
+    
+    $curl = curl_init();
+    
+    curl_setopt_array($curl, [
+        CURLOPT_URL => $apiUrl,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => 'DELETE',
+        CURLOPT_HTTPHEADER => [
+            'Authorization: Bearer ' . CLOUDFLARE_R2_API_TOKEN,
+        ],
+        CURLOPT_TIMEOUT => 30,
+    ]);
+    
+    $response = curl_exec($curl);
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $error = curl_error($curl);
+    curl_close($curl);
+    
+    if ($httpCode >= 200 && $httpCode < 300) {
+        return true;
+    } else {
+        error_log("Error deleting from Cloudflare R2: HTTP {$httpCode} - {$response}");
+        if ($error) {
+            error_log("cURL Error: {$error}");
+        }
+        return false;
+    }
+}
+
 // Procesar eliminación de producto
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['producto_id'])) {
     
@@ -107,24 +145,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['producto_id'])) {
         if ($producto['url_imagenes']) {
             $imagenes = explode(',', $producto['url_imagenes']);
             foreach ($imagenes as $imagen) {
-                // Sanitizar ruta de la imagen
                 $imagen = trim($imagen);
                 if (empty($imagen)) continue;
                 
-                // Validar que la ruta no contiene secuencias peligrosas
-                if (strpos($imagen, '..') !== false || strpos($imagen, '//') !== false) {
-                    error_log("Ruta de imagen sospechosa: " . $imagen);
-                    continue;
-                }
-                
-                // Construir ruta absoluta de forma segura
-                $base_path = realpath('../../../');
-                $file_path = $base_path . '/' . ltrim($imagen, '/');
-                
-                // Verificar que el archivo está dentro del directorio permitido
-                if (strpos(realpath(dirname($file_path)), $base_path) === 0 && file_exists($file_path)) {
-                    if (!unlink($file_path)) {
-                        error_log("No se pudo eliminar la imagen: " . $file_path);
+                if (strpos($imagen, CLOUDFLARE_R2_CDN_URL . '/productos/') === 0) {
+                    if (!deleteFromCloudflareR2($imagen)) {
+                        error_log("No se pudo eliminar la imagen de R2: " . $imagen);
+                    }
+                } else {
+                    if (strpos($imagen, '..') !== false || strpos($imagen, '//') !== false) {
+                        error_log("Ruta de imagen sospechosa: " . $imagen);
+                        continue;
+                    }
+                    
+                    $base_path = realpath('../../../');
+                    $file_path = $base_path . '/' . ltrim($imagen, '/');
+                    
+                    if (strpos(realpath(dirname($file_path)), $base_path) === 0 && file_exists($file_path)) {
+                        if (!unlink($file_path)) {
+                            error_log("No se pudo eliminar la imagen local: " . $file_path);
+                        }
                     }
                 }
             }

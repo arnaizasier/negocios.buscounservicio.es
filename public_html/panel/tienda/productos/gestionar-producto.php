@@ -31,6 +31,147 @@ function convertToWebP($sourcePath, $destinationPath, $quality = 70) {
     }
 }
 
+function uploadToCloudflareR2($localPath) {
+    $fileName = basename($localPath);
+    $newFileName = pathinfo($fileName, PATHINFO_FILENAME) . '.webp';
+    
+    $cloudflareUrl = CLOUDFLARE_R2_CDN_URL . "/productos/" . $newFileName;
+    $objectKey = "productos/" . $newFileName;
+    
+    $apiUrl = "https://api.cloudflare.com/client/v4/accounts/" . CLOUDFLARE_R2_ACCOUNT_ID . "/r2/buckets/" . CLOUDFLARE_R2_BUCKET_NAME . "/objects/$objectKey";
+    
+    $fileContent = file_get_contents($localPath);
+    
+    $curl = curl_init();
+    
+    curl_setopt_array($curl, [
+        CURLOPT_URL => $apiUrl,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => 'PUT',
+        CURLOPT_POSTFIELDS => $fileContent,
+        CURLOPT_HTTPHEADER => [
+            'Authorization: Bearer ' . CLOUDFLARE_R2_API_TOKEN,
+            'Content-Type: image/webp',
+        ],
+        CURLOPT_TIMEOUT => 30,
+    ]);
+    
+    $response = curl_exec($curl);
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $error = curl_error($curl);
+    curl_close($curl);
+    
+    if ($httpCode >= 200 && $httpCode < 300) {
+        return $cloudflareUrl;
+    } else {
+        error_log("Error uploading to Cloudflare R2: HTTP {$httpCode} - {$response}");
+        if ($error) {
+            error_log("cURL Error: {$error}");
+        }
+        return false;
+    }
+}
+
+function deleteFromCloudflareR2($cloudflareUrl) {
+    if (strpos($cloudflareUrl, CLOUDFLARE_R2_CDN_URL . '/productos/') !== 0) {
+        return false;
+    }
+    
+    $fileName = basename($cloudflareUrl);
+    $objectKey = "productos/" . $fileName;
+    
+    $apiUrl = "https://api.cloudflare.com/client/v4/accounts/" . CLOUDFLARE_R2_ACCOUNT_ID . "/r2/buckets/" . CLOUDFLARE_R2_BUCKET_NAME . "/objects/$objectKey";
+    
+    $curl = curl_init();
+    
+    curl_setopt_array($curl, [
+        CURLOPT_URL => $apiUrl,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => 'DELETE',
+        CURLOPT_HTTPHEADER => [
+            'Authorization: Bearer ' . CLOUDFLARE_R2_API_TOKEN,
+        ],
+        CURLOPT_TIMEOUT => 30,
+    ]);
+    
+    $response = curl_exec($curl);
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $error = curl_error($curl);
+    curl_close($curl);
+    
+    if ($httpCode >= 200 && $httpCode < 300) {
+        return true;
+    } else {
+        error_log("Error deleting from Cloudflare R2: HTTP {$httpCode} - {$response}");
+        if ($error) {
+            error_log("cURL Error: {$error}");
+        }
+        return false;
+    }
+}
+
+function validarImagenSegura($rutaArchivo) {
+    if (!function_exists('finfo_open')) {
+        error_log("Extensión fileinfo no disponible");
+        return false;
+    }
+    
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    if (!$finfo) {
+        error_log("No se pudo abrir finfo");
+        return false;
+    }
+    
+    $mimeType = finfo_file($finfo, $rutaArchivo);
+    finfo_close($finfo);
+    
+    $mimeTypesPermitidos = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!in_array($mimeType, $mimeTypesPermitidos)) {
+        error_log("MIME type no permitido: " . $mimeType);
+        return false;
+    }
+    
+    $imageInfo = getimagesize($rutaArchivo);
+    if ($imageInfo === false) {
+        error_log("getimagesize falló para: " . $rutaArchivo);
+        return false;
+    }
+    
+    if ($imageInfo[0] < 50 || $imageInfo[1] < 50) {
+        error_log("Imagen demasiado pequeña: " . $imageInfo[0] . "x" . $imageInfo[1]);
+        return false;
+    }
+    
+    if ($imageInfo[0] > 5000 || $imageInfo[1] > 5000) {
+        error_log("Imagen demasiado grande: " . $imageInfo[0] . "x" . $imageInfo[1]);
+        return false;
+    }
+    
+    $contenido = file_get_contents($rutaArchivo, false, null, 0, 1024);
+    $patronesPeligrosos = [
+        '/<\?php/i',
+        '/<script/i', 
+        '/javascript:/i',
+        '/vbscript:/i',
+        '/onload=/i',
+        '/onerror=/i',
+        '/eval\(/i',
+        '/base64_decode/i',
+        '/exec\(/i',
+        '/system\(/i',
+        '/shell_exec/i'
+    ];
+    
+    foreach ($patronesPeligrosos as $patron) {
+        if (preg_match($patron, $contenido)) {
+            error_log("Contenido peligroso detectado en archivo");
+            return false;
+        }
+    }
+    
+    return true;
+}
+
 $producto_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $es_edicion = $producto_id > 0;
 $producto = null;
@@ -115,17 +256,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($imagenes_eliminar as $imagen) {
             $index = array_search($imagen, $imagenes_existentes);
             if ($index !== false) {
-                $file_path = '/home/u898735099/domains/buscounservicio.es/public_html/' . $imagen;
-                if (file_exists($file_path)) {
-                    unlink($file_path);
-                }
+                deleteFromCloudflareR2($imagen);
                 unset($imagenes_existentes[$index]);
             }
         }
         $url_imagenes = array_values($imagenes_existentes);
     }
 
-    $upload_dir = '/home/u898735099/domains/buscounservicio.es/public_html/imagenes/productos/';
+    $upload_dir = '/tmp/productos_temp/';
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0755, true);
     }
@@ -145,25 +283,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         continue;
                     }
                     
-                    $filename_webp = uniqid() . '.webp';
-                    $destination_webp = $upload_dir . $filename_webp;
-                    $relative_path = "imagenes/productos/$filename_webp";
+                    if (!validarImagenSegura($tmp_name)) {
+                        $errors[] = "La imagen " . htmlspecialchars($_FILES['imagenes']['name'][$index]) . " no pasó las validaciones de seguridad.";
+                        continue;
+                    }
                     
-                    if (move_uploaded_file($tmp_name, $destination_webp . '.tmp')) {
-                        if (convertToWebP($destination_webp . '.tmp', $destination_webp)) {
-                            unlink($destination_webp . '.tmp');
-                            $url_imagenes[] = $relative_path;
+                    $filename_temp = uniqid('producto_') . '_' . bin2hex(random_bytes(8)) . '.webp';
+                    $destination_temp = $upload_dir . $filename_temp;
+                    
+                    if (move_uploaded_file($tmp_name, $destination_temp . '.tmp')) {
+                        if (convertToWebP($destination_temp . '.tmp', $destination_temp)) {
+                            unlink($destination_temp . '.tmp');
+                            
+                            $cloudflareUrl = uploadToCloudflareR2($destination_temp);
+                            if ($cloudflareUrl) {
+                                unlink($destination_temp);
+                                $url_imagenes[] = $cloudflareUrl;
+                            } else {
+                                unlink($destination_temp);
+                                $errors[] = "Error al subir la imagen " . htmlspecialchars($_FILES['imagenes']['name'][$index]) . " a Cloudflare R2.";
+                            }
                         } else {
                             $ext = pathinfo($_FILES['imagenes']['name'][$index], PATHINFO_EXTENSION);
-                            $filename_original = uniqid() . '.' . $ext;
-                            $destination_original = $upload_dir . $filename_original;
-                            $relative_path_original = "imagenes/productos/$filename_original";
-                            
-                            if (rename($destination_webp . '.tmp', $destination_original)) {
-                                $url_imagenes[] = $relative_path_original;
+                            if ($ext === 'webp') {
+                                if (rename($destination_temp . '.tmp', $destination_temp)) {
+                                    $cloudflareUrl = uploadToCloudflareR2($destination_temp);
+                                    if ($cloudflareUrl) {
+                                        unlink($destination_temp);
+                                        $url_imagenes[] = $cloudflareUrl;
+                                    } else {
+                                        unlink($destination_temp);
+                                        $errors[] = "Error al subir la imagen " . htmlspecialchars($_FILES['imagenes']['name'][$index]) . " a Cloudflare R2.";
+                                    }
+                                } else {
+                                    unlink($destination_temp . '.tmp');
+                                    $errors[] = "Error al procesar la imagen " . htmlspecialchars($_FILES['imagenes']['name'][$index]);
+                                }
                             } else {
-                                unlink($destination_webp . '.tmp');
-                                $errors[] = "Error al procesar la imagen " . htmlspecialchars($_FILES['imagenes']['name'][$index]);
+                                unlink($destination_temp . '.tmp');
+                                $errors[] = "Error al convertir la imagen " . htmlspecialchars($_FILES['imagenes']['name'][$index]) . " a WebP.";
                             }
                         }
                     } else {
@@ -305,7 +463,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     if (!empty($imagen)):
                                 ?>
                                     <div class="img-preview">
-                                        <img src="https://buscounservicio.es/<?php echo htmlspecialchars($imagen); ?>" alt="Imagen del producto">
+                                        <img src="<?php echo htmlspecialchars($imagen); ?>" alt="Imagen del producto">
                                         <div class="img-actions">
                                             <input type="checkbox" name="eliminar_imagen[]" value="<?php echo htmlspecialchars($imagen); ?>" id="eliminar_<?php echo $index; ?>" style="display: none;">
                                             <button type="button" class="remove-btn" onclick="toggleDeleteImage('eliminar_<?php echo $index; ?>', this)">Eliminar</button>
@@ -484,12 +642,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const checkbox = document.getElementById(checkboxId);
             if (checkbox.checked) {
                 checkbox.checked = false;
-                button.textContent = "Mantener";
+                button.textContent = "Eliminar";
                 button.style.backgroundColor = "#dc3545";
                 button.parentElement.parentElement.style.opacity = "1";
             } else {
                 checkbox.checked = true;
-                button.textContent = "Eliminando";
+                button.textContent = "Se eliminará";
                 button.style.backgroundColor = "#6c757d";
                 button.parentElement.parentElement.style.opacity = "0.5";
             }

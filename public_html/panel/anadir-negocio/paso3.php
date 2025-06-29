@@ -1,5 +1,6 @@
 <?php
 require_once 'conexion.php';
+require_once '/home/u898735099/domains/negocios.buscounservicio.es/config.php';
 
 $auth = new \Delight\Auth\Auth($pdo);
 
