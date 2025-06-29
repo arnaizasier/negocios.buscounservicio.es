@@ -178,7 +178,7 @@ $negocio_id = null;
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $negocio_id = intval($_GET['id']);
     
-    $stmt = $pdoNegocios->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
+    $stmt = $pdo2->prepare("SELECT * FROM negocios WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
     $stmt->execute([':negocio_id' => $negocio_id, ':usuario_id' => $usuario_id]);
     $negocio = $stmt->fetch(PDO::FETCH_ASSOC);
     
@@ -247,7 +247,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $params[':negocio_id'] = $negocio_id;
             }
             
-            $stmt = $pdoNegocios->prepare($sql);
+            $stmt = $pdo2->prepare($sql);
             $stmt->execute($params);
             $nombreExiste = ($stmt->fetchColumn() > 0);
             
@@ -262,10 +262,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $url = generarURLAmigable($nombre);
             
             try {
-                $pdoNegocios->exec("SET NAMES utf8mb4");
+                $pdo2->exec("SET NAMES utf8mb4");
                 
                 if ($negocio_id !== null) {
-                    $stmt = $pdoNegocios->prepare("UPDATE negocios SET nombre = :nombre, descripcion_negocio = :descripcion, url = :url 
+                    $stmt = $pdo2->prepare("UPDATE negocios SET nombre = :nombre, descripcion_negocio = :descripcion, url = :url 
                                               WHERE negocio_id = :negocio_id AND usuario_id = :usuario_id");
                     $stmt->execute([
                         ':nombre' => $nombre,
@@ -277,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     logSecurityEvent('Business updated successfully', ['negocio_id' => $negocio_id]);
                 } else {
-                    $stmt = $pdoNegocios->prepare("INSERT INTO negocios (usuario_id, nombre, descripcion_negocio, url) 
+                    $stmt = $pdo2->prepare("INSERT INTO negocios (usuario_id, nombre, descripcion_negocio, url) 
                                               VALUES (:usuario_id, :nombre, :descripcion, :url)");
                     $stmt->execute([
                         ':usuario_id' => $usuario_id,
@@ -286,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         ':url' => $url
                     ]);
                     
-                    $negocio_id = $pdoNegocios->lastInsertId();
+                    $negocio_id = $pdo2->lastInsertId();
                     logSecurityEvent('New business created successfully', ['negocio_id' => $negocio_id]);
                 }
                 
