@@ -1,0 +1,84 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-white);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--color-white);
+}
+
+.contenedor {
+    background-color: var(--color-white);
+    padding: 2rem 3rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.contenedor h1 {
+    font-family: 'Poppins1', sans-serif;
+    color: var(--color-title);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.contenedor p {
+    font-size: 1rem;
+    color: var(--color-green);
+    margin-bottom: 1.5rem;
+}
+
+.boton {
+    display: inline-block;
+    padding: 0.8rem 0.8rem;
+    background-color: var(--color-red);
+    color: var(--color-white);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-radius: var(--border-radius-btn);
+    transition: background-color 0.3s ease;
+}
+
+.boton:hover {
+    background-color: var(--hover-red);
+}
+
+.enlace {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.8rem 0.8rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: var(--border-radius-btn);
+    transition: background-color 0.3s ease;
+}
+
+.enlace:hover {
+    background-color: var(--hover-primary);
+}
+
+@media (max-width: 600px) {
+    .contenedor {
+        padding: 1.5rem;
+    }
+
+    .contenedor h1 {
+        font-size: 1.5rem;
+    }
+
+    .boton, .enlace {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .enlace {
+        margin-top: 0.5rem;
+    }
+}

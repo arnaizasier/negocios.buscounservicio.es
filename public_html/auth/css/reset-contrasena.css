@@ -1,0 +1,76 @@
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.contenedor {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+.titulo {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: var(--color-title);
+    font-weight: 700;
+}
+.grupo-formulario {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius-field);
+    padding: 10px;
+}
+.grupo-formulario i {
+    margin-right: 10px;
+    color: #888;
+}
+.grupo-formulario input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+    font-family: "Poppins", Sans-Serif;
+}
+.boton {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-btn);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(2, 77, 223, 0.25);
+}
+.boton:hover {
+    background-color: var(--hover-primary);
+    box-shadow: 0 6px 12px rgba(2, 77, 223, 0.35);
+}
+.alerta {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.alerta-error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+.alerta-exito {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}

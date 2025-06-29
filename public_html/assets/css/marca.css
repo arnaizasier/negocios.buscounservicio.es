@@ -1,0 +1,33 @@
+/* Fuente para el titulo */
+@font-face {
+    font-family: 'Poppins1';
+    src: url('../../assets/fuentes/Poppins-Bold.woff2') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Fuente para subtitulos todo el texto */
+@font-face {
+    font-family: 'Poppins';
+    src: url('/assets/fuentes/Poppins-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+:root {
+    --color-primary: #024ddf;
+    --color-title: #333;
+    --color-secondary: #ff8728;
+    --color-green: #22bf46;
+    --color-red: #fa1b1b;
+    --color-light: #f8f9fa;
+    --color-dark: #343a40;
+    --color-white: #ffffff;
+    --border-radius-btn: 25px;
+    --border-radius-field: 25px;
+    --hover-primary: #1f45b0;    
+    --hover-red: #d91818;         
+    --hover-secondary: #e56d1a;   
+    --hover-green: #1b9b3a; 
+    --box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;;
+}

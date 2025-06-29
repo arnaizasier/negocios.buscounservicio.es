@@ -1,0 +1,203 @@
+/* Estilos generales para el panel de Ajustes de Tienda */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+#main-content {
+    margin-left: 250px; /* Ajustar según el ancho del sidebar */
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+.container {
+    background-color: var(--color-white);
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+/* Estilos para títulos */
+h1 {
+    font-family: 'Poppins1', sans-serif;
+    font-size: 28px;
+    color: var(--color-title);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    color: var(--color-title);
+    margin: 30px 0 20px;
+}
+
+/* Estilos para los formularios */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+label {
+    display: inline-block;
+    min-width: 120px;
+    font-weight: 500;
+    color: var(--color-title);
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius-field);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(2, 77, 223, 0.1);
+}
+
+/* Estilos para botones */
+.btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    padding: 12px 25px;
+    border: none;
+    border-radius: var(--border-radius-btn);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    text-align: center;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-guardar {
+    background-color: var(--color-primary);
+    color: white;
+    align-self: flex-end;
+    margin-top: 10px;
+}
+
+.btn-guardar:hover {
+    background-color: var(--hover-primary);
+}
+
+/* Alertas */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.alert-danger {
+    background-color: rgba(250, 27, 27, 0.1);
+    color: var(--color-red);
+    border: 1px solid rgba(250, 27, 27, 0.2);
+}
+
+.alert-success {
+    background-color: rgba(34, 191, 70, 0.1);
+    color: var(--color-green);
+    border: 1px solid rgba(34, 191, 70, 0.2);
+}
+
+/* Estilos para el selector de negocio */
+form select {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius-field);
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+form select:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(2, 77, 223, 0.1);
+}
+
+form select option {
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media screen and (max-width: 1400px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+        margin-top: 100px;
+    }
+}
+
+
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    #main-content {
+        margin-left: 0;
+    }
+
+    .container {
+        padding: 20px;
+        margin: 10px;
+        margin-top: 100px;
+    }
+    
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    label {
+        min-width: auto;
+        margin-bottom: 5px;
+    }
+}
+
+/* Para pantallas muy pequeñas */
+@media screen and (max-width: 480px) {
+    input[type="text"] {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 15px;
+        margin-top: 80px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    h2 {
+        font-size: 18px;
+    }
+}

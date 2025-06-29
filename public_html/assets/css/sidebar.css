@@ -1,0 +1,262 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fuentes/Poppins-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container45 {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar45::-webkit-scrollbar {
+    width: 3px; 
+}
+
+.sidebar45::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
+}
+
+.sidebar45::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+
+.sidebar45::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.sidebar45 {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.2) rgba(255,255,255,0.05);
+}
+
+.sidebar45 {
+    -ms-overflow-style: none;
+}
+
+.sidebar45 {
+    background-color: #024ddf;
+    color: white;
+    width: 280px;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    height: 100vh;
+    position: fixed;
+}
+
+.sidebar45.closed45 {
+    width: 280px;
+}
+
+.logo-container45 {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    justify-content: space-between;
+}
+
+.logo45 {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logo-image45 {
+    height: 40px; 
+    margin-right: 10px;
+    transition: height 0.3s ease;
+}
+
+.sidebar45.closed45 .logo-text45 {
+    display: block;
+}
+
+.toggle-btn45 {
+    font-size: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+}
+
+@media (min-width: 1401px) {
+    .toggle-btn45 {
+        display: none;
+    }
+}
+
+.section-title45 {
+    padding: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.sidebar45.closed45 .section-title45 {
+    display: block;
+}
+
+.nav-list45 {
+    list-style: none;
+}
+
+.nav-item45 {
+    position: relative;
+}
+
+.nav-link45 {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.nav-link45:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.nav-icon45 {
+    width: 25px;
+    margin-right: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar45.closed45 .nav-icon45 {
+    margin-right: 15px;
+}
+
+.nav-text45 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar45.closed45 .nav-text45 {
+    display: block;
+}
+
+.submenu-toggle45 {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 14px;
+}
+
+.sidebar45.closed45 .submenu-toggle45 {
+    display: block;
+}
+
+.submenu45 {
+    display: none;
+    list-style: none;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.submenu45.active45 {
+    display: block;
+}
+
+.submenu-item45 .nav-link45 {
+    padding-left: 55px;
+}
+
+.content45 {
+    flex: 1;
+    margin-left: 280px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.content45.full45 {
+    margin-left: 280px;
+}
+
+.tooltip45 {
+    position: absolute;
+    left: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.sidebar45.closed45 .nav-item45:hover .tooltip45 {
+    opacity: 0;
+}
+
+
+@media (max-width: 1400px) {
+    .sidebar45 {
+        width: 100%;
+        height: 65px; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        z-index: 1000;
+    }
+    
+    .sidebar45.active45 {
+        height: 100vh;
+        overflow-y: auto;
+        width: 100%;
+    }
+    
+    .content45 {
+        margin-left: 0;
+        margin-top: 65px; 
+        width: 100%;
+    }
+    
+    .logo-container45 {
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .sidebar45:not(.active45) .nav-list45,
+    .sidebar45:not(.active45) .section-title45 {
+        display: none;
+    }
+    
+    .toggle-btn45 {
+        font-size: 22px;
+        padding: 5px;
+        display: block;
+    }
+    
+    .sidebar45:not(.active45) .logo-image45 {
+        display: block;
+        height: 40px; 
+    }
+    
+    .sidebar45 {
+        transition: height 0.3s ease;
+    }
+}

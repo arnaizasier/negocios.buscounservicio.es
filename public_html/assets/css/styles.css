@@ -1,0 +1,507 @@
+/* Fuentes */
+@font-face {
+    font-family: 'Poppins';
+    src: url('/assets/fuentes/Poppins-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* Reset global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Asegurar que el body ocupe toda la altura de la ventana gráfica */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+}
+
+/* Estilos del header */
+:root {
+    --primary-color: #024ddf;
+    --primary-hover: #0056b3;
+    --text-color: #333;
+    --bg-color: white;
+    --shadow: 0 2px 5px rgba(0,0,0,0.1);
+    --transition: all 0.3s ease;
+}
+
+.bus-header {
+    background-color: var(--bg-color);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.bus-logo-container {
+    display: flex;
+    align-items: center;
+    order: 0;
+}
+
+.bus-logo {
+    max-height: 50px;
+    margin-right: 10px;
+}
+
+.bus-nav-links {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.bus-nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    transition: var(--transition);
+    padding: 7px 0;
+    position: relative;
+}
+
+.bus-nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.bus-nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.bus-nav-links a:hover::after {
+    width: 100%;
+}
+
+.bus-button {
+    background-color: #024ddf;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.bus-button:hover {
+    transform: translateY(-2px);
+}
+
+.bus-button:active {
+    transform: translateY(0);
+}
+
+/* Burger Menu Animado */
+.bus-burger-menu {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.bus-burger-menu input {
+    display: none;
+}
+
+.bus-burger-menu svg {
+    height: 2.25rem;
+    width: 2.25rem;
+    transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line {
+    fill: none;
+    stroke: #024ddf;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 3;
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+                stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.line-top-bottom {
+    stroke-dasharray: 12 63;
+}
+
+.bus-burger-menu input:checked + svg {
+    transform: rotate(-45deg);
+}
+
+.bus-burger-menu input:checked + svg .line-top-bottom {
+    stroke-dasharray: 20 300;
+    stroke-dashoffset: -32.42;
+}
+
+/* Menú hamburguesa tradicional */
+.bus-menu-toggle {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    line-height: 1;
+    transition: var(--transition);
+    display: none;
+}
+
+/* Accesibilidad para navegación por teclado */
+.bus-nav-links a:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+}
+
+/* Ocultar el outline predeterminado del navegador al hacer clic (solo mantenerlo para navegación por teclado) */
+.bus-nav-links a:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Estilo del botón de ingreso en móviles */
+.bus-button-icon {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    line-height: 1;
+    transition: var(--transition);
+}
+
+.bus-button-icon i {
+    font-size: 24px;
+}
+
+.bus-button-icon:hover i,
+.bus-menu-toggle:hover {
+    color: var(--primary-color);
+}
+
+/* Contenedor para los íconos en móviles */
+.bus-icons-container {
+    display: none;
+    align-items: center;
+    gap: 25px;
+    order: 2;
+}
+
+/* Contenedor para el botón y el ícono del menú en tablets */
+.bus-tablet-container {
+    display: none;
+    align-items: center;
+    gap: 15px;
+    order: 2;
+}
+
+/* Asegurar que los íconos tengan la misma altura */
+.bus-icons-container button,
+.bus-icons-container a,
+.bus-tablet-container button,
+.bus-tablet-container a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+}
+
+/* Overlay para fondo oscuro al abrir el menú */
+.bus-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    z-index: 998;
+}
+
+.bus-menu-overlay.active {
+    display: none;
+}
+
+/* Estilo para el botón dentro del menú móvil */
+.bus-mobile-button {
+    display: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 15px;
+    transition: var(--transition);
+}
+
+/* Tablets pequeñas (entre 769px y 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .bus-header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    /* Menú horizontal en lugar de lateral */
+    .bus-nav-links {
+        display: none;
+        position: fixed;
+        top: 90px; /* Ajusta según la altura de tu header */
+        left: 0;
+        width: 100%;
+        height: auto;
+        background-color: var(--bg-color);
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: all 0.3s ease-in-out;
+        z-index: 999;
+    }
+
+    .bus-nav-links.active {
+        display: flex;
+    }
+
+    .bus-tablet-container {
+        display: flex;
+    }
+
+    .bus-menu-toggle {
+        display: block;
+    }
+
+    .bus-button,
+    .bus-icons-container {
+        display: none;
+    }
+
+    .bus-nav-links .bus-mobile-button {
+        display: block;
+    }
+}
+
+/* Móviles (≤768px) */
+@media (max-width: 768px) {
+    .bus-header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 15px;
+    }
+
+    .bus-logo {
+        max-height: 40px;
+    }
+
+    /* Menú horizontal en lugar de lateral */
+    .bus-nav-links {
+        display: none;
+        position: fixed;
+        top: 70px; /* Ajusta según la altura de tu header */
+        left: 0;
+        width: 100%;
+        height: auto;
+        background-color: var(--bg-color);
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: all 0.3s ease-in-out;
+        z-index: 999;
+    }
+
+    .bus-nav-links.active {
+        display: flex;
+    }
+
+    .bus-menu-toggle {
+        display: block;
+    }
+    
+    .bus-button,
+    .bus-tablet-container {
+        display: none;
+    }
+
+    .bus-button-icon {
+        display: block;
+    }
+
+    .bus-icons-container {
+        display: flex;
+    }
+    .bus-nav-links .bus-mobile-button {
+        display: block;
+    }
+}
+
+/* Estilos del contenido principal */
+main {
+    flex: 1 0 auto; /* Crece para llenar el espacio disponible */
+}
+
+/* Estilos del footer */
+.bus-footer {
+    flex-shrink: 0; /* Evita que el footer se encoja */
+    background: linear-gradient(135deg, #0046c7, #2d70fd);
+    color: white;
+    padding: 4rem 0 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.bus-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.bus-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.bus-footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.bus-footer-column h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    color: white;
+}
+
+.bus-footer-column h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+.bus-footer-column .bus-legal-warning {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.bus-footer-column ul {
+    list-style: none;
+}
+
+.bus-footer-column ul li {
+    margin-bottom: 0.7rem;
+}
+
+.bus-footer-column ul li a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+
+.bus-footer-column ul li a::before {
+    content: '›';
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+}
+
+.bus-footer-column ul li a:hover {
+    color: #ffffff;
+    transform: translateX(5px);
+}
+
+.bus-footer-column ul li a:hover::before {
+    transform: translateX(3px);
+}
+
+.bus-btn-primary {
+    display: inline-block;
+    background-color: white;
+    color: #0046c7;
+    font-weight: 600;
+    padding: 0.7rem 1.5rem;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.bus-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+}
+
+.bus-social-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.bus-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.bus-social-icon:hover {
+    background-color: white;
+}
+
+.bus-social-icon:hover svg {
+    fill: #0046c7;
+}
+
+.bus-footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .bus-footer-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .bus-footer-column {
+        margin-bottom: 2rem;
+    }
+}

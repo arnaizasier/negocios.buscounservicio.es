@@ -1,0 +1,155 @@
+php_flag log_errors On
+php_value error_log php_errorlog
+
+ErrorDocument 400 /error/400.php
+ErrorDocument 401 /error/401.php
+ErrorDocument 402 /error/402.php
+ErrorDocument 403 /error/403.php
+ErrorDocument 404 /error/404.php
+ErrorDocument 500 /error/500.php
+ErrorDocument 501 /error/501.php
+ErrorDocument 502 /error/502.php
+ErrorDocument 503 /error/503.php
+ErrorDocument 504 /error/504.php
+
+
+
+Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+Header set Pragma "no-cache"
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]
+
+RewriteEngine On
+
+# Si la solicitud no es para un archivo o directorio existente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+# Prevenir acceso a archivos sensibles
+<Files ~ "^\.">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files ~ "\.php$">
+    Order allow,deny
+    Allow from all
+</Files>
+
+<Files ~ "\.(sql|log|conf|ini|bak|backup|old|tmp|temp)$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Proteger archivos de configuración
+<Files "config.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "composer.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "composer.lock">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "composer.phar">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Headers de seguridad
+<IfModule mod_headers.c>
+    # Remover headers que revelan información del servidor
+    Header unset Server
+    Header unset X-Powered-By
+    Header unset X-AspNet-Version
+    Header unset X-AspNetMvc-Version
+</IfModule>
+
+
+<IfModule mod_rewrite.c>
+    # Bloquear accesos a archivos sensibles del sistema
+    # Bloquear archivos peligrosos por extensión
+RewriteCond %{REQUEST_URI} \.(htaccess|htpasswd|ini|log|sh|inc|bak|tmp|backup|sql|gz|tar|zip|rar)$ [NC]
+RewriteRule ^.* - [F,L]
+
+# Bloquear archivos por nombre específicos
+RewriteCond %{REQUEST_URI} (php_errorlog|readme\.txt|license\.txt|changelog\.txt|install\.txt|config\.txt)$ [NC]
+RewriteRule ^.* - [F,L]
+
+    # Bloquear métodos HTTP no estándar (complementa a Cloudflare)
+    RewriteCond %{REQUEST_METHOD} ^(PUT|PATCH|CONNECT|OPTIONS|HEAD)$ [NC]
+    RewriteRule .* - [F,L]
+    
+    # Bloquear User Agents vacíos o muy cortos (bots maliciosos)
+    RewriteCond %{HTTP_USER_AGENT} ^.{0,10}$ [OR]
+    RewriteCond %{HTTP_USER_AGENT} ^(-|_|\.|/)*$ [OR]
+    RewriteCond %{HTTP_USER_AGENT} (masscan|netsparker|w3af|sqlmap|nikto|havij|libwww) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Bloquear referrers sospechosos
+    RewriteCond %{HTTP_REFERER} (poker|casino|viagra|cialis|levitra|pharmacy) [NC,OR]
+    RewriteCond %{HTTP_REFERER} (semalt|kambasoft|savetubevideo|buttons-for-website) [NC,OR]
+    RewriteCond %{HTTP_REFERER} (\.tk\.|\.ml\.|\.ga\.|\.cf\.) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Bloquear acceso directo a includes y templates
+    RewriteCond %{REQUEST_URI} ^.*(inc/|includes/|templates/|template/|theme/).*\.php$ [NC,OR]
+    RewriteCond %{REQUEST_URI} ^.*/(cache|tmp|temp|logs?)/.*$ [NC]
+    RewriteRule .* - [F,L]
+    
+    # Protección adicional contra Path Traversal
+    RewriteCond %{REQUEST_URI} \.\./\.\./\.\. [NC,OR]
+    RewriteCond %{REQUEST_URI} \.(php|html?|js|css|txt|xml|json)\?.*\.(php|html?|js|css|txt|xml|json) [NC,OR]
+    RewriteCond %{REQUEST_URI} proc/version [NC,OR]
+    RewriteCond %{REQUEST_URI} etc/passwd [NC]
+    RewriteRule .* - [F,L]
+    
+    # Bloquear requests con headers malformados
+    RewriteCond %{HTTP_HOST} !^[a-zA-Z0-9.-]+$ [OR]
+    RewriteCond %{HTTP_HOST} \.\. [OR]
+    RewriteCond %{HTTP_HOST} \.$
+    RewriteRule .* - [F,L]
+    
+    # Protección contra inyección de comandos del sistema
+    RewriteCond %{QUERY_STRING} (cmd|exec|passthru|shell_exec|system|proc_open|popen) [NC,OR]
+    RewriteCond %{QUERY_STRING} (`|\$\(|\${|\||;) [NC]
+    RewriteCond %{QUERY_STRING} (chmod|chown|chgrp|kill|mail|wget|curl|fetch) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Bloquear intentos de bypass de seguridad
+    RewriteCond %{QUERY_STRING} (globals|encode|localhost|loopback|127\.0\.0\.1) [NC,OR]
+    RewriteCond %{QUERY_STRING} (request|http_user_agent|http_host|https|ssl) [NC,OR]
+    RewriteCond %{QUERY_STRING} (auto_prepend_file|auto_append_file|allow_url_include) [NC]
+    RewriteRule .* - [F,L]
+    
+    # Protección contra XXE (XML External Entity)
+    RewriteCond %{REQUEST_METHOD} ^POST$ [NC]
+    RewriteCond %{CONTENT_TYPE} (application/xml|text/xml) [NC]
+    RewriteCond %{REQUEST_BODY} <!ENTITY [NC]
+    RewriteRule .* - [F,L]
+    
+    # Limitar tamaño de requests (protección básica contra DoS)
+    LimitRequestBody 10485760  # 10MB máximo
+    
+</IfModule>
+
+
+# Limitar tamaño de subida de archivos
+<IfModule mod_php.c>
+    php_value upload_max_filesize 2M
+    php_value post_max_size 2M
+    php_value max_execution_time 30
+    php_value max_input_time 30
+    php_value memory_limit 64M
+    
+    # Deshabilitar funciones peligrosas
+    php_value disable_functions "exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec,parse_ini_file,show_source"
+</IfModule>

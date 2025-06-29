@@ -1,0 +1,519 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fuentes/Poppins-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+:root {
+    --color-principal: #024ddf;
+    --color-fondo: #ffffff;
+    --color-titulos: #333;
+    --color-texto: #333;
+    --color-especial: #ff8728;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --border-radius: 1.5rem;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-texto);
+    background-color: var(--color-fondo);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 50px;
+}
+
+h2 {
+    color: var(--color-principal);
+    margin-bottom: var(--spacing-md);
+}
+
+h3, h4, h5, h6 {
+    color: var(--color-titulos);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-container {
+    background-color: var(--color-fondo);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+}
+
+button {
+    padding: 10px 20px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1e44a8;
+}
+
+.button-secondary {
+    background-color: #f5f5f5;
+    color: var(--color-texto);
+}
+
+.button-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-lg);
+}
+
+a.button-secondary {
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.btn-nav a.button-secondary {
+    background-color: #fff;
+    border: 2px solid #ff8728;
+    color: #ff8728;
+}
+
+.btn-nav a.button-secondary:hover {
+    background-color: #ff8728;
+    color: #fff;
+}
+
+.instrucciones-horario {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.instrucciones-horario i {
+    color: var(--color-principal);
+    margin-right: 5px;
+}
+
+.horario-container {
+    margin-bottom: 30px;
+}
+
+.horario-dia {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dia-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.dia-header h4 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--color-titulos);
+    display: flex;
+    align-items: center;
+}
+
+.dia-header h4 i {
+    color: var(--color-principal);
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.dia-controles {
+    display: flex;
+    align-items: center;
+}
+
+.toggle-label {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--color-principal);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--color-principal);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.horario-rangos {
+    margin-top: 15px;
+}
+
+.rango-horario {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.hora-inicio, .hora-fin {
+    width: 140px;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    color: #333;
+    background-color: #fff;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path fill="%23888" d="M2 4l4 4 4-4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+.separador {
+    margin: 0 10px;
+    color: #666;
+    font-size: 14px;
+}
+
+.btn-eliminar-rango {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #fff;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-eliminar-rango:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-agregar-rango {
+    margin-top: 10px;
+    background-color: #fff;
+    border: 1px dashed #ccc;
+    color: #333;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.btn-agregar-rango i {
+    margin-right: 5px;
+    color: var(--color-principal);
+}
+
+.btn-agregar-rango:hover {
+    background-color: #e9ecef;
+}
+
+.copiar-horario {
+    margin-top: 20px;
+    position: relative;
+}
+
+.btn-copiar-horario {
+    background-color: #e6f7ff;
+    border: 1px solid #b3e5fc;
+    color: #0288d1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.btn-copiar-horario i {
+    margin-right: 6px;
+}
+
+.btn-copiar-horario:hover {
+    background-color: #b3e5fc;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal-overlay.visible {
+    display: block;
+}
+
+.menu-copiar {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    z-index: 1000;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    max-width: 90vw;
+}
+
+.opciones-dias {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.opciones-dias label {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.opciones-dias input[type="checkbox"] {
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+}
+
+.menu-copiar.visible {
+    display: block;
+}
+
+.modal-title {
+    margin: 0 0 10px 0;
+    color: var(--color-principal);
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.modal-subtitle {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-aplicar-copia {
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    flex: 1;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.btn-aplicar-copia:hover {
+    background-color: #1e44a8;
+}
+
+.btn-cancelar-copia {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    flex: 1;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.btn-cancelar-copia:hover {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.sugerencia-horario {
+    background-color: #e6f7ff;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+}
+
+.sugerencia-horario i {
+    color: #0288d1;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.sugerencia-horario p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.sugerencia-horario a {
+    color: #0288d1;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.btn-no-horario {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.btn-no-horario:hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        padding: var(--spacing-md);
+    }
+    
+    .btn-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--spacing-sm);
+        align-items: stretch;
+    }
+    
+    .btn-nav button,
+    .btn-nav a.button-secondary {
+        flex: 1;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        font-size: 14px;
+    }
+    
+    .rango-horario {
+        flex-wrap: wrap;
+    }
+    
+    .hora-inicio, .hora-fin {
+        width: calc(50% - 10px);
+    }
+    
+    .btn-eliminar-rango {
+        margin-top: 10px;
+        margin-left: auto;
+    }
+    
+    .menu-copiar {
+        width: 90vw;
+        max-width: 350px;
+        padding: 20px 15px;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .btn-aplicar-copia,
+    .btn-cancelar-copia {
+        width: 100%;
+    }
+}

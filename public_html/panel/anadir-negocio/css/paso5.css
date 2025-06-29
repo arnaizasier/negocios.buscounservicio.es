@@ -1,0 +1,438 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fuentes/Poppins-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+:root {
+    --color-principal: #024ddf;
+    --color-fondo: #ffffff;
+    --color-titulos: #333;
+    --color-texto: #333;
+    --color-especial: #ff8728;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --border-radius: 1.5rem;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-texto);
+    background-color: var(--color-fondo);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 50px;
+}
+
+h2 {
+    color: var(--color-principal);
+    margin-bottom: var(--spacing-md);
+}
+
+h3, h4, h5, h6 {
+    color: var(--color-titulos);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-container {
+    background-color: var(--color-fondo);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: border 0.3s ease;
+    font-family: "Poppins";
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-principal);
+    outline: none;
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1e44a8;
+}
+
+.button-secondary {
+    background-color: #f5f5f5;
+    color: var(--color-texto);
+}
+
+.button-secondary:hover {
+    background-color: #e0e0e0;
+}
+
+.btn-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--spacing-lg);
+}
+
+.btn-nav a,
+.btn-nav button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    min-width: 120px;
+}
+
+.btn-nav a.button-secondary {
+    background-color: #fff;
+    border: 2px solid #ff8728;
+    color: #ff8728;
+}
+
+.btn-nav a.button-secondary:hover {
+    background-color: #ff8728;
+    color: #fff;
+}
+
+.btn-nav button {
+    background-color: var(--color-principal);
+    color: white;
+}
+
+.btn-nav button:hover {
+    background-color: #1e44a8;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--color-principal);
+    outline: none;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-md);
+}
+
+a.button-secondary {
+    font-family: 'Poppins', sans-serif;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff8728;
+    color: #fff;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+a.button-secondary:hover {
+    background-color: #e56d1a;
+    text-decoration: none;
+}
+
+.categoria-container {
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.categoria-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.servicio-item {
+    background-color: white;
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.servicio-item:hover {
+    background-color: #f5f5f5;
+}
+
+.servicio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.servicio-acciones {
+    display: flex;
+    align-items: center;
+}
+
+.servicio-detalles {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.seccion-container {
+    border-top: 1px solid #eee;
+    margin-top: 30px;
+    padding-top: 20px;
+    scroll-margin-top: 20px;
+}
+
+.formulario-servicios {
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.titulo-formulario {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: var(--color-principal);
+}
+
+.inline-form {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.inline-form input {
+    flex-grow: 1;
+    height: 48px;
+    padding: 10px;
+}
+
+.inline-form button {
+    height: 48px;
+    padding: 0 20px;
+    white-space: nowrap;
+    min-width: auto;
+}
+
+.categoria-badge {
+    display: inline-block;
+    background-color: #e9ecef;
+    padding: 3px 8px;
+    border-radius: var(--border-radius);
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.accion-editar {
+    background-color: var(--color-principal);
+    color: white;
+    padding: 4px 8px;
+    border-radius: var(--border-radius);
+    margin-right: 5px;
+    cursor: pointer;
+    border: none;
+    font-size: 12px;
+}
+
+select option[value="__agregar_nueva__"] {
+    font-style: italic;
+    color: var(--color-principal);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        padding: var(--spacing-md);
+    }
+    
+    .btn-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--spacing-sm);
+        align-items: stretch;
+    }
+    
+    .btn-nav button,
+    .btn-nav a {
+        flex: 1;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        font-size: 14px;
+    }
+    
+    .inline-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .inline-form input,
+    .inline-form button {
+        width: 100%;
+        height: 48px;
+    }
+    
+    .servicio-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .servicio-acciones {
+        margin-top: 10px;
+    }
+}
+
+/* Estilos para selector de trabajadores */
+.trabajadores-selector {
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    background-color: #f9f9f9;
+}
+
+.trabajador-option {
+    margin-bottom: 10px;
+}
+
+.trabajador-option label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: normal;
+    margin-bottom: 0;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.trabajador-option label:hover {
+    background-color: #e9ecef;
+}
+
+.trabajador-option input[type="checkbox"] {
+    margin-right: 10px;
+    width: auto;
+    transform: scale(1.2);
+}
+
+.trabajador-rol {
+    color: #6c757d;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.trabajadores-individuales {
+    margin-left: 20px;
+    border-left: 2px solid #dee2e6;
+    padding-left: 15px;
+    margin-top: 10px;
+}
+
+.trabajadores-asignados {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.badge-trabajador {
+    display: inline-block;
+    background-color: var(--color-principal);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin: 2px;
+    font-weight: 500;
+}
+
+.badge-trabajador.sin-trabajadores {
+    background-color: #dc3545;
+    color: white;
+}
+
+.lista-trabajadores {
+    margin-top: 5px;
+}
+
+.help-text {
+    font-size: 14px;
+    color: #6c757d;
+    margin-top: 5px;
+}

@@ -1,0 +1,293 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('/fuentes/Poppins-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+:root {
+    --color-principal: #024ddf;
+    --color-fondo: #ffffff;
+    --color-titulos: #333;
+    --color-texto: #333;
+    --color-especial: #ff8728;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --border-radius: 1.5rem;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--color-texto);
+    background-color: var(--color-fondo);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: 50px;
+}
+
+h2 {
+    color: var(--color-principal);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-container {
+    background-color: var(--color-fondo);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+}
+
+.required::after {
+    content: " *";
+    color: red;
+}
+
+input[type="text"],
+input[type="hidden"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: border 0.3s ease;
+    font-family: "Poppins";
+}
+
+input[type="text"]:focus {
+    border-color: var(--color-principal);
+    outline: none;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+button:hover {
+    background-color: #1e44a8;
+}
+
+.btn-nav a.button-secondary {
+    background-color: #fff;
+    border: 2px solid #ff8728;
+    color: #ff8728;
+}
+
+.btn-nav a.button-secondary:hover {
+    background-color: #ff8728;
+    color: #fff;
+}
+
+#map {
+    height: 300px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    border: 1px solid #ddd;
+}
+
+.input-search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: stretch;
+}
+
+.input-search-container input {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.input-search-container button {
+    flex-shrink: 0;
+    min-width: 80px;
+    white-space: nowrap;
+}
+
+/* Textos de ayuda */
+.direccion-ayuda {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.mapa-instrucciones {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--color-texto);
+    font-size: 16px;
+}
+
+/* Navegación de botones */
+.btn-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-lg);
+    gap: 15px;
+}
+
+.btn-nav a {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Mensajes de error y éxito */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid #f5c6cb;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid #c3e6cb;
+}
+
+/* Estilos para mejorar la apariencia del mapa en móviles */
+.leaflet-control-container {
+    font-family: "Poppins", sans-serif;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+}
+
+.leaflet-popup-content {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        padding-top: 30px;
+    }
+    
+    .form-container {
+        padding: var(--spacing-md);
+    }
+    
+    .input-search-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .input-search-container button {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    #map {
+        height: 250px;
+        margin-top: 15px;
+    }
+    
+    .btn-nav {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--spacing-sm);
+        align-items: stretch;
+    }
+    
+    .btn-nav button,
+    .btn-nav a {
+        flex: 1;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        font-size: 15px;
+        margin-bottom: 0;
+    }
+    
+    .mapa-instrucciones {
+        font-size: 15px;
+        margin-top: 15px;
+    }
+    
+    .direccion-ayuda {
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+}
+
+/* Estilos para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+        padding-top: 20px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+    
+    #map {
+        height: 200px;
+    }
+    
+    .form-container {
+        padding: 15px;
+    }
+    
+    button, .btn-nav a {
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+}

@@ -1,0 +1,394 @@
+/* General Styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #fff;
+    display: flex; /* Use flexbox for layout with sidebar */
+}
+
+#main-content {
+    flex-grow: 1; 
+    padding: 25px;
+    padding-left: 275px;
+    transition: padding-left 0.3s ease; 
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling of the page */
+}
+
+/* Adjust main content padding if sidebar is collapsed */
+body.collapsed #main-content {
+    padding-left: 80px; 
+}
+
+.container {
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow-x: hidden; /* Prevent container from causing horizontal scroll */
+}
+
+h1 {
+    color: #333;
+    text-align: left;
+    font-family: "Poppins1", Sans-Serif;
+    font-weight: 700;
+}
+
+/* Table Container with horizontal scroll */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* This creates the horizontal scroll for the table only */
+    margin-bottom: 20px;
+    border-radius: 8px;
+    -webkit-overflow-scrolling: touch; 
+}
+
+/* Table Styles */
+.devoluciones-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9em;
+    min-width: 900px;
+    
+}
+
+.devoluciones-table th, .devoluciones-table td {
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.devoluciones-table thead th {
+    background-color: #024ddf; 
+    color: #ffffff;
+    font-weight: bold;
+    position: sticky; 
+    top: 0; 
+    z-index: 10; 
+}
+
+.devoluciones-table thead th:first-child {
+    border-top-left-radius: 8px; /* Esquina superior izquierda */
+}
+
+.devoluciones-table thead th:last-child {
+    border-top-right-radius: 8px; /* Esquina superior derecha */
+}
+
+.devoluciones-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.devoluciones-table td img {
+    max-width: 80px;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+}
+
+/* Button Styles */
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9em;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px 3px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-aceptar {
+    background-color: #024ddf; 
+    color: white;
+}
+.btn-aceptar:hover {
+    background-color: #218838;
+}
+
+.btn-cancelar {
+    background-color: #ff8728; 
+    color: white;
+}
+.btn-cancelar:hover {
+    background-color: #e56d1a;
+}
+
+.btn-info {
+    background-color: #024ddf; 
+    color: white;
+}
+.btn-info:hover {
+    background-color: #1f45b0;
+}
+
+.btn-rechazar {
+    background-color: #ff8728; 
+    color: #fff;
+}
+.btn-rechazar:hover {
+    background-color: #e56d1a;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+    padding-top: 60px; /* Location of the box */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px; /* Max width */
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h2 {
+    margin-top: 0;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Styles within Modal */
+.modal-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.modal-form input[type="text"],
+.modal-form input[type="number"],
+.modal-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Makes padding and border included in the element's total width and height */
+    font-size: 1em;
+}
+
+.modal-form textarea {
+    min-height: 100px;
+    resize: vertical; /* Allow vertical resize */
+}
+
+.modal-form .precio-info {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.modal-form button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.modal-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Alert Styles */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 1em;
+    position: relative; /* Needed for potential close button */
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 1400px) {
+    #main-content {
+        padding-left: 15px; 
+        margin-top: 70px;
+    }
+    
+    body.collapsed #main-content {
+        padding-left: 15px;
+    }
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 992px) {
+    #main-content {
+        padding-left: 15px; 
+        margin-top: 70px;
+    }
+    
+    body.collapsed #main-content {
+        padding-left: 15px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #main-content {
+        padding: 20px;
+        padding-left: 15px;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+
+    .btn {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+    
+    .modal-content {
+        width: 90%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #main-content {
+        padding: 15px;
+    }
+    
+    body.collapsed #main-content {
+        padding-left: 15px;
+    }
+    
+    /* Card-based layout for mobile */
+    .devoluciones-table {
+        min-width: unset; /* Remove minimum width */
+    }
+    
+    .devoluciones-table thead {
+        display: none; /* Hide table header */
+    }
+    
+    .devoluciones-table, 
+    .devoluciones-table tbody, 
+    .devoluciones-table tr, 
+    .devoluciones-table td {
+        display: block;
+        width: 100%;
+        border: none;
+    }
+    
+    .devoluciones-table tr {
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    
+    .devoluciones-table td {
+        text-align: right;
+        padding: 12px 15px;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .devoluciones-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        font-weight: bold;
+        text-align: left;
+        color: #555;
+    }
+    
+    .devoluciones-table td:last-child {
+        border-bottom: 0; /* Remove border from last cell */
+        padding-top: 15px;
+        padding-bottom: 15px;
+        background-color: #f8f9fa;
+    }
+    
+    /* Center action buttons on mobile */
+    .devoluciones-table td:last-child {
+        text-align: center;
+    }
+    
+    .devoluciones-table td:last-child::before {
+        display: none;
+    }
+    
+    /* Improve button layout on mobile */
+    .devoluciones-table td:last-child .btn {
+        margin: 5px;
+        display: inline-block;
+        width: calc(100% - 10px);
+        text-align: center;
+    }
+}

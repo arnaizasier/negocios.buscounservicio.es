@@ -1,0 +1,126 @@
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.contenedor {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.titulo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+    font-family: "Poppins1", sans-serif;
+}
+
+.subtitulo {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.grupo-formulario {
+    position: relative;
+    display: block;
+}
+
+.grupo-formulario i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.grupo-formulario input {
+    display: block;
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    background-color: #fff;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.grupo-formulario input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.grupo-formulario input::placeholder {
+    color: #aaa;
+}
+
+.boton {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-btn);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(2, 77, 223, 0.25);
+}
+
+.boton:hover {
+    background-color: var(--hover-primary);
+    box-shadow: 0 6px 12px rgba(2, 77, 223, 0.35);
+}
+
+.texto-centrado {
+    display: block;
+    margin-top: 10px;
+}
+
+.enlace {
+    color: #003087;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.enlace:hover {
+    text-decoration: underline;
+}
+
+.alerta {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.alerta-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alerta-exito {
+    background-color: #d4edda;
+    color: #155724;
+}

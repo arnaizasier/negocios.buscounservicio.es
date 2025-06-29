@@ -1,0 +1,1 @@
+[28-Jun-2025 10:37:20 Europe/Madrid] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u898735099/domains/negocios.buscounservicio.es/public_html/trabajadores/reservas/calendario/obtener_detalles_reserva.php on line 162

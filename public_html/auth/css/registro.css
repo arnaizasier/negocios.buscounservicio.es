@@ -1,0 +1,235 @@
+/* Estilos generales - manteniendo los mismos */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    background-color: var(--color-white);
+    margin: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos para la sección de texto lateral */
+.texto-lateral {
+    text-align: center;
+    max-width: 500px;
+    margin-right: 150px;
+}
+
+.texto-lateral h1 {
+    font-family: 'Poppins1', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--color-primary);
+}
+
+.texto-lateral p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-dark);
+}
+
+/* Estilos para la sección del formulario */
+.formulario-seccion {
+    width: 100%;
+    max-width: 450px;
+}
+
+.formulario {
+    width: 90%;
+}
+
+/* Estilos para los grupos del formulario - AQUÍ ESTÁN LOS CAMBIOS PRINCIPALES */
+.grupo-formulario {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Modificando la posición del ícono para que siempre esté alineado con el input */
+.grupo-formulario i {
+    position: absolute;
+    left: 15px;
+    /* Cambiando esto para que tome la altura del input, no del grupo completo */
+    top: 15px; /* Altura fija en lugar de porcentaje */
+    color: var(--color-primary);
+    z-index: 1;
+}
+
+.grupo-formulario input,
+.grupo-formulario select {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius-field);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.grupo-formulario input:focus,
+.grupo-formulario select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 2px 8px rgba(2, 77, 223, 0.1);
+}
+
+.grupo-formulario small {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+/* Estilo para el botón de mostrar contraseña - AJUSTADO */
+.grupo-formulario button[type="button"] {
+    position: absolute;
+    right: 10px;
+    /* Ajustando esto para que esté alineado con el input */
+    top: 15px; /* Altura fija en lugar de porcentaje */
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 5px;
+}
+
+.grupo-formulario button[type="button"]:hover {
+    color: var(--hover-primary);
+}
+
+/* Estilos para el botón de registro */
+.boton {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--border-radius-btn);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(2, 77, 223, 0.25);
+}
+
+.boton:hover {
+    background-color: var(--hover-primary);
+    box-shadow: 0 6px 12px rgba(2, 77, 223, 0.35);
+}
+
+/* Estilos para alertas */
+.alerta {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+}
+
+.alerta-error {
+    background-color: rgba(250, 27, 27, 0.1);
+    color: var(--color-red);
+    border: 1px solid var(--color-red);
+}
+
+.alerta-exito {
+    background-color: rgba(34, 191, 70, 0.1);
+    color: var(--color-green);
+    border: 1px solid var(--color-green);
+}
+
+/* Estilos para el enlace de inicio de sesión */
+.texto-centrado {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.95rem;
+}
+
+.enlace {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.enlace:hover {
+    color: var(--hover-primary);
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .contenedor {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .texto-lateral {
+        margin-right: 0;
+        margin-bottom: 40px;
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .texto-lateral h1 {
+        font-size: 2rem;
+    }
+    
+    .formulario-seccion {
+        padding: 0 20px;
+        max-width: 90%;
+    }
+    
+    /* Ajustando posición de íconos en responsive */
+    .grupo-formulario i,
+    .grupo-formulario button[type="button"] {
+        top: 13px;
+    }
+}
+
+/* Para pantallas más pequeñas */
+@media (max-width: 480px) {
+    .texto-lateral h1 {
+        font-size: 1.6rem;
+    }
+    
+    .texto-lateral p {
+        font-size: 0.95rem;
+    }
+    
+    .grupo-formulario input,
+    .grupo-formulario select {
+        padding: 10px 15px 10px 40px;
+    }
+    
+    .grupo-formulario button[type="button"] {
+        font-size: 0.7rem;
+    }
+    
+    /* Ajustando posición de íconos en móviles */
+    .grupo-formulario i,
+    .grupo-formulario button[type="button"] {
+        top: 11px;
+    }
+}
