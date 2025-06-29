@@ -14,7 +14,7 @@ if (!isset($_SESSION['initiated'])) {
     $_SESSION['initiated'] = true;
 }
 
-require_once '../../../../config.php';
+require_once '/home/u898735099/domains/negocios.buscounservicio.es/config.php';
 require_once '../../../../db-publica.php';
 
 use Delight\Auth\Auth;
@@ -77,6 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 function deleteFromCloudflareR2($cloudflareUrl) {
+    if (!defined('CLOUDFLARE_R2_CDN_URL') || !defined('CLOUDFLARE_R2_ACCOUNT_ID') || !defined('CLOUDFLARE_R2_BUCKET_NAME') || !defined('CLOUDFLARE_R2_API_TOKEN')) {
+        error_log("Error: Constantes de Cloudflare R2 no definidas en config.php");
+        return false;
+    }
+    
     if (strpos($cloudflareUrl, CLOUDFLARE_R2_CDN_URL . '/productos/') !== 0) {
         return false;
     }
@@ -148,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['producto_id'])) {
                 $imagen = trim($imagen);
                 if (empty($imagen)) continue;
                 
-                if (strpos($imagen, CLOUDFLARE_R2_CDN_URL . '/productos/') === 0) {
+                if (defined('CLOUDFLARE_R2_CDN_URL') && strpos($imagen, CLOUDFLARE_R2_CDN_URL . '/productos/') === 0) {
                     if (!deleteFromCloudflareR2($imagen)) {
                         error_log("No se pudo eliminar la imagen de R2: " . $imagen);
                     }

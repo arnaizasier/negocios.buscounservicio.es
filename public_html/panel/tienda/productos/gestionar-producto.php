@@ -6,7 +6,7 @@ session_start();
 require_once __DIR__ . "/../../../src/rate-limiting.php";
 require_once __DIR__ . "/../../../src/headers-seguridad.php";
 
-require_once '../../../../config.php';
+require_once '/home/u898735099/domains/negocios.buscounservicio.es/config.php';
 require_once '../../../../db-publica.php';
 
 use Delight\Auth\Auth;
@@ -32,6 +32,11 @@ function convertToWebP($sourcePath, $destinationPath, $quality = 70) {
 }
 
 function uploadToCloudflareR2($localPath) {
+    if (!defined('CLOUDFLARE_R2_CDN_URL') || !defined('CLOUDFLARE_R2_ACCOUNT_ID') || !defined('CLOUDFLARE_R2_BUCKET_NAME') || !defined('CLOUDFLARE_R2_API_TOKEN')) {
+        error_log("Error: Constantes de Cloudflare R2 no definidas en config.php");
+        return false;
+    }
+    
     $fileName = basename($localPath);
     $newFileName = pathinfo($fileName, PATHINFO_FILENAME) . '.webp';
     
@@ -73,6 +78,11 @@ function uploadToCloudflareR2($localPath) {
 }
 
 function deleteFromCloudflareR2($cloudflareUrl) {
+    if (!defined('CLOUDFLARE_R2_CDN_URL') || !defined('CLOUDFLARE_R2_ACCOUNT_ID') || !defined('CLOUDFLARE_R2_BUCKET_NAME') || !defined('CLOUDFLARE_R2_API_TOKEN')) {
+        error_log("Error: Constantes de Cloudflare R2 no definidas en config.php");
+        return false;
+    }
+    
     if (strpos($cloudflareUrl, CLOUDFLARE_R2_CDN_URL . '/productos/') !== 0) {
         return false;
     }
