@@ -19,7 +19,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="robots" content="noindex">
-    <title>Bienvenida</title>
+    <title>BuscoUnServicio Negocios</title>
     <link rel="stylesheet" href="assets/css/marca.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -427,7 +427,7 @@ try {
             <div class="content-wrapper">
                 <h1>Inicia sesión o Regístrate</h1>
                 <a href="https://negocios.buscounservicio.es/auth/login" class="button">Iniciar sesión</a>
-                <a href="https://negocios.buscounservicio.es/auth/registro" class="button">Rregistrarse</a>
+                <a href="https://negocios.buscounservicio.es/auth/registro" class="button">Registrarse</a>
             </div>
             <a href="https://negocios.buscounservicio.es/ayuda/" class="footer-link">
                 <i class="fas fa-question-circle"></i>
