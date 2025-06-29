@@ -425,7 +425,7 @@ try {
         <div class="left"></div>
         <div class="right">
             <div class="content-wrapper">
-                <h1>Inicia sesión o Regístratee</h1>
+                <h1>Inicia sesiónn o Regístrate</h1>
                 <a href="https://negocios.buscounservicio.es/auth/login" class="button">Iniciar sesión</a>
                 <a href="https://negocios.buscounservicio.es/auth/registro" class="button">Registrarse</a>
             </div>
